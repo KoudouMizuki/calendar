@@ -1,13 +1,14 @@
 class MeetingsController < ApplicationController
-  before_action :set_meeting, only: %i[ show edit update destroy ]
 
   # GET /meetings or /meetings.json
   def index
     @meetings = Meeting.all
+    @meeting = Meeting.new
   end
 
   # GET /meetings/1 or /meetings/1.json
   def show
+    @meeting = Meeting.find(params[:id])
   end
 
   # GET /meetings/new
@@ -17,21 +18,15 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1/edit
   def edit
+    @meeting = Meeting.find(params[:id])
   end
 
   # POST /meetings or /meetings.json
   def create
     @meeting = Meeting.new(meeting_params)
+    redirect_to meetings_path
 
-    respond_to do |format|
-      if @meeting.save
-        format.html { redirect_to meeting_url(@meeting), notice: "Meeting was successfully created." }
-        format.json { render :show, status: :created, location: @meeting }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
-      end
-    end
+    
   end
 
   # PATCH/PUT /meetings/1 or /meetings/1.json
@@ -49,22 +44,16 @@ class MeetingsController < ApplicationController
 
   # DELETE /meetings/1 or /meetings/1.json
   def destroy
+    @meeting = Meeting.find(params[:id])
     @meeting.destroy
-
-    respond_to do |format|
-      format.html { redirect_to meetings_url, notice: "Meeting was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to meetings_path, notice:"削除しました"
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_meeting
-      @meeting = Meeting.find(params[:id])
-    end
 
     # Only allow a list of trusted parameters through.
     def meeting_params
-      params.require(:meeting).permit(:name, :start_time)
+      params.require(:meeting).permit(:name, :content, :start_time)
     end
 end

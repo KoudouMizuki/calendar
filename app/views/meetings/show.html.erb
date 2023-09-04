@@ -1,14 +1,20 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>タイトル:</strong>
   <%= @meeting.name %>
 </p>
 
 <p>
-  <strong>Start time:</strong>
-  <%= @meeting.start_time %>
+  <strong>内容:</strong>
+  <%= @meeting.content %>
 </p>
 
-<%= link_to 'Edit', edit_meeting_path(@meeting) %> |
-<%= link_to 'Back', meetings_path %>
+<p>
+  <strong>時間:</strong>
+  <%= @meeting.start_time.strftime("%Y　%m/%d　%H:%M") %>
+</p>
+
+<%= link_to '編集', edit_meeting_path(@meeting) %> |
+<%= link_to '戻る', meetings_path %> |
+<%= link_to '削除', meeting_path(@meeting.id), method: :delete, data: { confirm: '本当に削除しますか?' } %>
