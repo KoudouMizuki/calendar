@@ -1,4 +1,5 @@
 class MeetingsController < ApplicationController
+  before_action
 
   # GET /meetings or /meetings.json
   def index
@@ -24,21 +25,20 @@ class MeetingsController < ApplicationController
   # POST /meetings or /meetings.json
   def create
     @meeting = Meeting.new(meeting_params)
-    redirect_to meetings_path
-
-    
+    if @meeting.save
+      redirect_to meetings_path, notice: "スケジュールを追加しました"
+    else
+      render 'index'
+    end  
   end
 
   # PATCH/PUT /meetings/1 or /meetings/1.json
   def update
-    respond_to do |format|
-      if @meeting.update(meeting_params)
-        format.html { redirect_to meeting_url(@meeting), notice: "Meeting was successfully updated." }
-        format.json { render :show, status: :ok, location: @meeting }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
-      end
+    @meeting = Meeting.find(params[:id])
+    if @meeting.update(meeting_params)
+      redirect_to meetings_path, notice: "編集しました"
+    else
+      render 'edit'
     end
   end
 
@@ -46,12 +46,12 @@ class MeetingsController < ApplicationController
   def destroy
     @meeting = Meeting.find(params[:id])
     @meeting.destroy
-    redirect_to meetings_path, notice:"削除しました"
+    redirect_to meetings_path, notice: "削除しました"
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-
+    
     # Only allow a list of trusted parameters through.
     def meeting_params
       params.require(:meeting).permit(:name, :content, :start_time)
