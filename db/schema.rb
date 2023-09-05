@@ -12,14 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2023_09_04_090130) do
 
-  create_table "blogs", force: :cascade do |t|
-    t.string "taitle"
-    t.text "content"
-    t.datetime "start_time"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "meetings", force: :cascade do |t|
     t.string "name"
     t.datetime "start_time"
