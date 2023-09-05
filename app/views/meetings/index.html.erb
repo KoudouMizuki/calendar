@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>スケジュール</h1>
+<h1>【スケジュール一覧】</h1>
 
 <table>
   <thead>
@@ -28,23 +28,29 @@
 
 <br>
 
+<h1>【スケジュール追加】</h1>
 <%= form_with(model: @meeting, local: true) do |form| %>
 
   <div class="title">
     <div class="form-tag">タイトル</div>
     <%= form.text_field :name %>
   </div>
-
+  
+  <br>
 
   <div class="content">
     <div class="form-tag">内容</div>
     <%= form.text_field :content %>
   </div>
+  
+  <br>
 
-    <div class="time">
-    <div class="form-tag">時間</div>
+  <div class="time">
+    <div class="form-tag">日時</div>
     <%= form.datetime_select :start_time %>
   </div>
+  
+  <br>
 
  <div class="submit">
     <%= form.submit "追加" %>
@@ -53,13 +59,14 @@
 
 <br>
 
+<h1>【カレンダー】</h1>
 <%= month_calendar(events: @meetings) do |date, meetings| %>
   <%= date.day %>
 
   <% meetings.each do |meeting| %>
     <div>
       <%= link_to meeting_path(meeting.id) do %>
-        <%= meeting.name %>
+        <%= meeting.start_time.strftime("%H:%M") %> <%= meeting.name %>
       <%end%>
     </div>
   <%end%>

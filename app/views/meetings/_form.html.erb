@@ -12,21 +12,21 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <label for="book_title">タイトル</label>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :content %>
+   <label for="book_title">内容</label>
     <%= form.text_field :content %>
   </div>
 
   <div class="field">
-    <%= form.label :start_time %>
+    <label for="book_title">日時</label>
     <%= form.datetime_select :start_time %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "更新する" %>
   </div>
 <% end %>
